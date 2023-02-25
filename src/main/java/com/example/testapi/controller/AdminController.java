@@ -1,11 +1,10 @@
 package com.example.testapi.controller;
 
+import com.example.testapi.model.CourseAdminList;
 import com.example.testapi.model.CourseDto;
 import com.example.testapi.request.UpsertCourseRequest;
 import com.example.testapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,8 +18,8 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping("")
-    public List<CourseDto> getListCourse(){
-        return adminService.getListCourse();
+    public CourseAdminList getListCourse(@RequestParam Integer page, @RequestParam Integer pageSize){
+        return adminService.getListCourse(page,pageSize);
     }
 
     @PostMapping("")
