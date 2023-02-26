@@ -1,5 +1,6 @@
 package com.example.testapi.mapper;
 
+import com.example.testapi.exception.NotFoundException;
 import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseAdminList;
 import com.example.testapi.model.CourseDto;
@@ -38,8 +39,8 @@ public class CourseAdminListMapper {
             courseAdminLists.add(courseAdminList);
         }
         System.out.println(courseAdminLists);
-        if (page >= courseAdminLists.size()){
-            throw new RuntimeException("số trang phải nhỏ hơn " + courseAdminLists.size());
+        if (page > courseAdminLists.size()){
+            throw new NotFoundException("số trang phải nhỏ hơn " + courseAdminLists.size());
         }
         return courseAdminLists.get(page - 1);
     }
