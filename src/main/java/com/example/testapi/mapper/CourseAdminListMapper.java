@@ -3,11 +3,6 @@ package com.example.testapi.mapper;
 import com.example.testapi.exception.NotFoundException;
 import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseAdminList;
-import com.example.testapi.model.CourseDto;
-import com.example.testapi.repository.CourseRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,6 +14,9 @@ public class CourseAdminListMapper {
 
     public CourseAdminList courseAdminList(List<Course> courses, Integer page, Integer pageSize) {
         List<CourseAdminList> courseAdminLists = new ArrayList<>();
+        if (page == null){
+            page = 1;
+        }
         int i = 0;
         int currPage = 1;
         while (i < courses.size()) {
@@ -38,8 +36,7 @@ public class CourseAdminListMapper {
             courseAdminList.setData(data);
             courseAdminLists.add(courseAdminList);
         }
-        System.out.println(courseAdminLists);
-        if (page > courseAdminLists.size()){
+        if (page > courseAdminLists.size() || page <= 0) {
             throw new NotFoundException("số trang phải nhỏ hơn " + courseAdminLists.size());
         }
         return courseAdminLists.get(page - 1);

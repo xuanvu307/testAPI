@@ -23,23 +23,23 @@ import java.util.Objects;
 public class AdminService {
 
     @Autowired
-    private CourseRepository courseRepository;
-    private CourseMapper courseMapper;
-    private CourseAdminListMapper courseAdminList;
+    private final CourseRepository courseRepository;
+    private final CourseMapper courseMapper;
+    private final CourseAdminListMapper courseAdminList;
 
 
     private int genId() {
         return courseRepository.listCourse().get(courseRepository.listCourse().size() - 1).getId() + 1;
     }
 
+    //    1. Xem danh sách khóa học (có phân trang)
     public CourseAdminList getListCourse(Integer page, Integer pageSize) {
-        if (page == null) {
+        if (page == null || page <= 0) {
             page = 1;
         }
-        if (pageSize == null) {
+        if (pageSize == null || pageSize <= 0) {
             pageSize = 10;
         }
-
         return courseAdminList.courseAdminList(courseRepository.listCourse(), page, pageSize);
     }
 
