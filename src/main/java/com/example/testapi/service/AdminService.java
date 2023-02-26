@@ -10,6 +10,7 @@ import com.example.testapi.repository.CourseRepository;
 import com.example.testapi.repository.UserRepository;
 import com.example.testapi.request.UpsertCourseRequest;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,9 @@ import java.util.Objects;
 public class AdminService {
 
     @Autowired
-    private final CourseRepository courseRepository;
-    private final CourseMapper courseMapper;
-    private final CourseAdminListMapper courseAdminList;
+    private CourseRepository courseRepository;
+    private CourseMapper courseMapper;
+    private CourseAdminListMapper courseAdminList;
 
 
     private int genId() {
@@ -38,9 +39,8 @@ public class AdminService {
         if (pageSize == null) {
             pageSize = 10;
         }
-        List<CourseAdminList> listc = courseAdminList.courseAdminLists(courseRepository.listCourse(),pageSize);
 
-        return listc.get(page-1);
+        return courseAdminList.courseAdminList(courseRepository.listCourse(), page, pageSize);
     }
 
     //2. Tạo khóa học mới
