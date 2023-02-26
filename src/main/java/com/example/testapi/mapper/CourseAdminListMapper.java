@@ -2,35 +2,46 @@ package com.example.testapi.mapper;
 
 import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseAdminList;
-
-
+import com.example.testapi.model.CourseDto;
+import com.example.testapi.repository.CourseRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-
 public class CourseAdminListMapper {
-    public List<CourseAdminList> courseAdminLists(List<Course> courses, Integer pageSize) {
+
+
+    public CourseAdminList courseAdminList(List<Course> courses, Integer page, Integer pageSize) {
         List<CourseAdminList> courseAdminLists = new ArrayList<>();
         int i = 0;
+        int currPage = 1;
         while (i < courses.size()) {
             CourseAdminList courseAdminList = new CourseAdminList();
-            courseAdminList.setCurrPage(1);
+            courseAdminList.setCurrPage(currPage);
             courseAdminList.setTotalItem(courses.size());
             courseAdminList.setPageSize(pageSize);
-            courseAdminList.setTotalPage(courses.size() / pageSize + 1);
-            List<Course> currList = new ArrayList<>();
+            courseAdminList.setTotalPage((int) Math.ceil((double) courses.size() / pageSize));
+            List<Course> data = new ArrayList<>();
             int j = 1;
             while (j <= pageSize && i < courses.size()) {
-                currList.add(courses.get(i));
+                data.add(courses.get(i));
                 i++;
                 j++;
             }
-            courseAdminList.setData(currList);
-            courseAdminList.setCurrPage(courseAdminList.getCurrPage() + 1);
+            currPage++;
+            courseAdminList.setData(data);
+            courseAdminLists.add(courseAdminList);
         }
-        return courseAdminLists;
+        System.out.println(courseAdminLists);
+        if (page >= courseAdminLists.size()){
+            throw new RuntimeException("số trang phải nhỏ hơn " + courseAdminLists.size());
+        }
+        return courseAdminLists.get(page - 1);
     }
+
 }
