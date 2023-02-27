@@ -3,6 +3,7 @@ package com.example.testapi.mapper;
 import com.example.testapi.exception.NotFoundException;
 import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseAdminList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.List;
 @Component
 public class CourseAdminListMapper {
 
+    @Autowired
+    private CourseMapper courseMapper;
 
     public CourseAdminList courseAdminList(List<Course> courses, Integer page, Integer pageSize) {
         List<CourseAdminList> courseAdminLists = new ArrayList<>();
@@ -33,7 +36,7 @@ public class CourseAdminListMapper {
                 j++;
             }
             currPage++;
-            courseAdminList.setData(data);
+            courseAdminList.setData(courseMapper.listCourseDto(data));
             courseAdminLists.add(courseAdminList);
         }
         if (page > courseAdminLists.size() || page <= 0) {

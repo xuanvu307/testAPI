@@ -14,5 +14,5 @@ public class CourseAdminList {
     private Integer pageSize;
     private Integer totalPage;
     private Integer totalItem;
-    private List<Course> data;
+    private List<CourseDto> data;
 }
