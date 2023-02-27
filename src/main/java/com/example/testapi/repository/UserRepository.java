@@ -1,7 +1,6 @@
 package com.example.testapi.repository;
 
 import com.example.testapi.dao.UserDB;
-import com.example.testapi.exception.BadRequest;
 import com.example.testapi.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +20,7 @@ public class UserRepository {
             // user lỗi id trả về 1 user mặc định có id = 0 và các giá trị null;
             User u = new User();
             u.setId(0);
+//            throw new NotFoundException("id không tồn tại");
             return u;
         }
     }

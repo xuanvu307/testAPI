@@ -17,7 +17,7 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping("")
-    public CourseAdminList getListCourse(@RequestParam Integer page, @RequestParam Integer pageSize){
+    public CourseAdminList getListCourse(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize){
         return adminService.getListCourse(page,pageSize);
     }
 

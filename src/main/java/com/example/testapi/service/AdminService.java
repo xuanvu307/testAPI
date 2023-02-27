@@ -7,15 +7,12 @@ import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseAdminList;
 import com.example.testapi.model.CourseDto;
 import com.example.testapi.repository.CourseRepository;
-import com.example.testapi.repository.UserRepository;
 import com.example.testapi.request.UpsertCourseRequest;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Objects;
 
 @Service
@@ -34,12 +31,6 @@ public class AdminService {
 
     //    1. Xem danh sách khóa học (có phân trang)
     public CourseAdminList getListCourse(Integer page, Integer pageSize) {
-        if (page == null || page <= 0) {
-            page = 1;
-        }
-        if (pageSize == null || pageSize <= 0) {
-            pageSize = 10;
-        }
         return courseAdminList.courseAdminList(courseRepository.listCourse(), page, pageSize);
     }
 
@@ -55,6 +46,7 @@ public class AdminService {
                 .thumbnail(request.getThumbnail())
                 .userId(request.getUserId())
                 .build();
+
         CourseDB.courses.add(course);
         return courseMapper.courseDto(course);
     }
