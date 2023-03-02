@@ -1,5 +1,6 @@
 package com.example.testapi.mapper;
 
+import com.example.testapi.exception.NotFoundException;
 import com.example.testapi.model.Course;
 import com.example.testapi.model.CourseDto;
 import com.example.testapi.model.User;
@@ -23,9 +24,17 @@ public class CourseMapper {
         courseDto.setType(course.getType());
         courseDto.setTopics(course.getTopics());
         courseDto.setThumbnail(course.getThumbnail());
-        User user = userRepository.getUser(course.getUserId());
-        courseDto.setUser(user);
-        return courseDto;
+        boolean checkId = userRepository.checkId(course.getUserId());
+        if (checkId){
+            User user = userRepository.getUser(course.getUserId());
+            courseDto.setUser(user);
+            return courseDto;
+        } else {
+            throw new NotFoundException("id khoong ton tai");
+        }
+//        User user = userRepository.getUser(course.getUserId());
+//        courseDto.setUser(user);
+//        return courseDto;
     }
 
     public List<CourseDto> listCourseDto(List<Course> courses){

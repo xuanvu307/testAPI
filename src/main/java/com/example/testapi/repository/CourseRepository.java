@@ -6,6 +6,7 @@ import com.example.testapi.model.Course;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CourseRepository {
@@ -21,5 +22,12 @@ public class CourseRepository {
 
     public List<Course> listCourse(){
         return CourseDB.courses;
+    }
+    public boolean checkIdCourse(Integer id){
+        Optional<Course> course =  listCourse().stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst();
+
+        return course.isPresent();
     }
 }

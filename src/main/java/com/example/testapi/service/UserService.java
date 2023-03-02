@@ -26,8 +26,8 @@ public class UserService {
 
         return courseMapper.listCourseDto(courseRepository.listCourse().stream()
                 .filter(course -> course.getType().equalsIgnoreCase(type)
-                        || course.getName().equalsIgnoreCase(name)
-                        || course.getTopics().contains(topic))
+                        && course.getName().equalsIgnoreCase(name)
+                        && course.getTopics().contains(topic))
                 .toList());
     }
 
